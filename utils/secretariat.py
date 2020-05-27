@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class Secretary:
 
-    def __init__():
+    def __init__(self):
         # init file service for the secretary
         return
 

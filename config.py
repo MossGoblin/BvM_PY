@@ -30,4 +30,4 @@ ROTATION_MAP = [2, 1, 8, 3, 0, 7, 4, 5, 6]
         # 3 0 7
         # 4 5 6
 
-BOARD_STATE = []
+BOARD_STATE = [1, 1, 0, 0, 0, 0, 0, 0, 0]

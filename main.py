@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 from datetime import datetime, timedelta
-import config
 
-#locals
-#from agents import beast, menace, board
+# locals
+import config
+from agents import board
 from utils import secretariat
 
 secretary = secretariat.Secretary()
+brd = board.Board()
 
 def main():
     secretary.jot(f'\nMAIN:: {str(datetime.now())}', 't')

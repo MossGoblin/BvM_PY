@@ -1,30 +1,24 @@
+import os,sys,inspect
+currentdir = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0,parentdir)
 
-LINE_DEFS = [
-    [1, 8, 7],
-    [2, 0, 6],
-    [3, 4, 5],
-    [1, 2, 3],
-    [8, 0, 4],
-    [7, 6, 5],
-    [1, 0, 5],
-    [3, 0, 7]
-]
-
-BOARD_STATE = []
+import config as cc
 
 class Board():
     
     grid = None
     
+
     def __init__(self):
+        b_state = cc.BOARD_STATE
+        l_defs = cc.LINE_DEFS
+
+
+        board_chain = self.init_board()
         # create empty grid
         # use 1d for convenience ??
         '''
-        rotation map:
-        1 8 7
-        2 0 6
-        3 4 5
-
         rotating once 90 degrees counterclockwise => value + 2 mod 8
 
         for each configuration:
@@ -32,12 +26,24 @@ class Board():
             if not: up to 3 rotations until found in dictionary
         '''
 
+
+    def init_board(self):
+        # recursive
+        # base case - nine pieces on the board
+        # B starts first
+        latest_piece = cc.EMPTY
+        available_cells = self.get_available_cells()
+
+        #HERE
+        return False
+
+
     def check_line(self, line):
         # check if all cells in the line are of one type and not 0
         # return True if the line is a win, else return false
-        if (BOARD_STATE[LINE_DEFS[line[0]]] == 
-            BOARD_STATE[LINE_DEFS[line[1]]] == 
-            BOARD_STATE[LINE_DEFS[line[2]]]) & (BOARD_STATE[LINE_DEFS[line[0]] != 0]):
+        if (self.b_state[self.l_defs[line[0]]] == 
+            self.b_state[self.l_defs[line[1]]] == 
+            self.b_state[self.l_defs[line[2]]]) & (self.b_state[self.l_defs[line[0]] != 0]):
             return True
         return False
     
@@ -46,17 +52,17 @@ class Board():
         # return True if so
         # else return False
         for line in range(9):
-            if check_line(line) == True:
+            if (self.check_line(line) == True):
                 return True
         return False
 
     def get_available_cells(self):
         # returns all cells that are available for placement
         # skips cells that can produce win
-        # TODO extend method to work with onlycheck for win for only one og the agents
+        # TODO extend method to work with check_cell for only one of the agents
         availables = []
-        for cell in BOARD_STATE:
-            if (cell != 0) & (check_cell(cell, 1) == False) & (check_cell(cell, 2) == False): # empty cell that can not produce a win
+        for cell in self.b_state:
+            if (cell != 0) & (self.check_cell(cell, 1) == False) & (self.check_cell(cell, 2) == False): # empty cell that can not produce a win
                 availables.append(cell)
         return availables
 
@@ -67,11 +73,11 @@ class Board():
         # iterate through lines to find the ones that include that cell
 
         # check if the cell is available at all
-        if BOARD_STATE[cell] != 0:
+        if self.b_state[cell] != 0:
             print(f'checked cell {cell} for win, but it is occupied')
 
         # build a triplet from the board state with the agent value in the cell in question
-        for line in LINE_DEFS: # for each line
+        for line in self.l_defs: # for each line
             if cell in line: # if the line has the cell in question
                 counter = 0
                 triplet = []
@@ -79,7 +85,7 @@ class Board():
                     if line_cell == cell:
                         triplet[counter] = agent # place the agent value on the cell in question
                     else:
-                        triplet[counter] = BOARD_STATE[cell] # get the cell value from the board state
+                        triplet[counter] = self.b_state[cell] # get the cell value from the board state
                     counter += 1
         
             # check the triplet for win

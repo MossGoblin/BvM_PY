@@ -1,3 +1,5 @@
 {
-    "python.pythonPath": "C:\\Anaconda\\python.exe"
+    "python.pythonPath": "C:\\Users\\hugol\\.conda\\envs\\bvm\\python.exe",
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
 }

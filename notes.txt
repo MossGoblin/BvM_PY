@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/56844378/pylint-no-member-issue-but-code-still-works-vscode
